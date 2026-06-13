@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+    'drf_spectacular',        # ADD THIS
     'accounts',
     'projects',
     'teams',
@@ -79,10 +80,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_PERMISSION_CLASSES': [],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',  # ADD THIS
+}
+
+SPECTACULAR_SETTINGS = {                          # ADD THIS BLOCK
+    'TITLE': 'AI Project Management API',
+    'DESCRIPTION': 'API docs for AI Project Management System',
+    'VERSION': '1.0.0',
 }
 
 SIMPLE_JWT = {

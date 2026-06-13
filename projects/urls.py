@@ -10,5 +10,5 @@ urlpatterns = [
     path('sprints/', views.SprintListView.as_view()),
     path('ai/breakdown/', views.AITaskBreakdownView.as_view()),
     path('ai/sprint-plan/', views.AISprintPlanView.as_view()),
-    path('dashboard/', views.DashboardView.as_view()),
+    path('dashboard/', views.DashboardOverviewView.as_view()),
 ]

@@ -11,8 +11,14 @@ class TeamListView(APIView):
     def get(self, request):
         user = get_user_from_request(request)
         if not user: return Response({'error':'Unauthorized'}, status=401)
-        teams = Team.objects.filter(members=user) | Team.objects.filter(owner=user)
-        return Response(TeamSerializer(teams.distinct(), many=True).data)
+        teams = (Team.objects.filter(members=user) | Team.objects.filter(owner=user)).distinct()
+        result = []
+        for team in teams:
+            data = TeamSerializer(team).data
+            members = TeamMember.objects.filter(team=team)
+            data['members'] = TeamMemberSerializer(members, many=True).data
+            result.append(data)
+        return Response(result)
 
     def post(self, request):
         user = get_user_from_request(request)

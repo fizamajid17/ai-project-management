@@ -68,3 +68,12 @@ class MeView(APIView):
             s.save()
             return Response(s.data)
         return Response(s.errors, status=400)
+    
+class UsersListView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    def get(self, request):
+        user = get_user_from_request(request)
+        if not user: return Response({'error':'Unauthorized'}, status=401)
+        users = User.objects.filter(is_active=True)
+        return Response(UserSerializer(users, many=True).data)
